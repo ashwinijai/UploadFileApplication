@@ -1,0 +1,31 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+jar {
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+    manifest {
+        attributes(
+                'Main-Class': 'com.fileupload.UploadFileMainApplication'
+        )
+    } from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+}
+group = 'org.fileUpload'
+version = '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework:spring-web:5.3.34'
+    implementation 'org.springframework:spring-core:5.3.34'
+    implementation 'org.springframework:spring-context:5.3.34'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.16.1'
+}
+
+test {
+    useJUnitPlatform()
+}
